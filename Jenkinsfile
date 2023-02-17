@@ -2,9 +2,10 @@ pipeline {
   agent { label 'linux'}
   stages {
     stage('SCM') {
-          steps {
-             checkout scm
+      steps {
+          checkout scm
     }
+  }
     stage('Scan') {
       steps {
         withSonarQubeEnv(installationName: 'SQ-scanner') { 
