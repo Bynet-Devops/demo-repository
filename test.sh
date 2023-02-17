@@ -6,7 +6,7 @@ unzip sonar-scanner-cli.zip
 
 # Analyze a sample project
 ./sonar-scanner-4.6.2.2472-linux/bin/sonar-scanner \
-  -Dsonar.projectKey=my-project \
+  -Dsonar.projectKey=test-run \
   -Dsonar.sources=. \
   -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.login=<your-sonarqube-token>
+  -Dsonar.login=squ_ac4f4cdbd5d10a379d29208cc4f5bf6597f294d1
