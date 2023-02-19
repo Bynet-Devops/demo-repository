@@ -1,10 +1,4 @@
-pipeline {
-  agent any
 
-  environment {
-    SONARQUBE_HOST_URL = 'http://localhost:9000'
-    SONARQUBE_LOGIN = 'sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5'
-  }
 
 pipeline {
     agent any
