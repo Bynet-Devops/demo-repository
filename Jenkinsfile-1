@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:14'  // specify the Node.js version you need
+      args '-u root'   // use root user to avoid permission issues
+    }
+  }
 
   environment {
     SONARQUBE_HOST_URL = 'http://localhost:9000'
