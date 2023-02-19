@@ -22,12 +22,11 @@ stages {
       
      steps {
      withSonarQubeEnv('sq-server') {
-     withCredentials([string(credentialsId: 'sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5', variable: 'SONARQUBE_TOKEN')
-   
-          sh '''$SCANNER_HOME/bin/sonar-scanner \
-          -Dsonar.projectKey=sq-inner \
-          -Dsonar.projectName=sq-inner \
-          -Dsonar.sources=./'''
+     withCredentials([string(credentialsId: 'sq-token', variable: 'SONARQUBE_TOKEN')
+       sh '''$SCANNER_HOME/bin/sonar-scanner \
+       -Dsonar.projectKey=sq-inner \
+       -Dsonar.projectName=sq-inner \
+       -Dsonar.sources=./'''
          
 
     
