@@ -13,8 +13,10 @@ tools {
 }
 stages {
   stage('SonarQube analysis') {
-
-      def mvn = tool 'Maven';
+     environment {
+        SCANNER_HOME = tool 'Sonar-scanner'
+     }
+     def mvn = tool 'Maven';   
 
     
      steps {
