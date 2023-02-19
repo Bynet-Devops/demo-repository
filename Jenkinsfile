@@ -28,10 +28,10 @@ stages {
         -Dsonar.projectName=sq-inner \
         -Dsonar.sources=./'''
          
-
-    
+        }
+        }
        }
-     }
+                         }
 
    stage('SQuality Gate') {
      steps {
