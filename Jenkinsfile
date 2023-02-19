@@ -17,8 +17,8 @@ stages {
        SCANNER_HOME = tool 'Sonar-scanner'
      }
      steps {
-     withSonarQubeEnv('SonarQube') {
-     withCredentials([string(credentialsId: 'my-sonarqube-token', variable: 'SONARQUBE_TOKEN')]) {
+     withSonarQubeEnv('sq-server') {
+     withCredentials([string(credentialsId: 'sq-token', variable: 'SONARQUBE_TOKEN')]) {
        sh 'mvn clean install sonar:sonar -Dsonar.login=$SONARQUBE_TOKEN'
      }
         }
