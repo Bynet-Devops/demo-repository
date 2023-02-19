@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+
+  stages {
+    stage('Build') {
+      steps {
+        // Build your JavaScript project here
+        sh 'npm install'
+        sh 'npm run build'
+      }
+    }
+
+    stage('Code Analysis') {
+      environment {
+        SONAR_LOGIN = credentials('sonarqube-token')
+      }
+      steps {
+        withSonarQubeEnv('SonarQube') {
+          sh 'sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.projectKey=<project-key> -Dsonar.sources=. -Dsonar.projectName=<project-name> -Dsonar.projectVersion=<project-version> -Dsonar.javascript.lcov.reportPaths=<path-to-lcov-file>'
+        }
+      }
+    }
+  }
+}
