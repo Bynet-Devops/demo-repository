@@ -17,8 +17,9 @@ stages {
       SCANNER_HOME = tool 'Sonar-scanner'
     }
     steps {
-       withSonarQubeEnv('sq-server') {
+       withSonarQubeEnv(credentialsId: 'sq-token', 'sq-server') {
                 sh '''$SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.host.url=http://localhost:9000
                 -Dsonar.projectKey=sq-inner \
                 -Dsonar.projectName=sq-inner \
                 -Dsonar.sources=./ \
@@ -35,6 +36,4 @@ stages {
 }
 }
 }
-
-
 
