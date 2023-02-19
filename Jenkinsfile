@@ -12,11 +12,10 @@ tools {
    jdk 'idk 1.8'
 }
 stages {
-  stage('SonarQube analysis') {
+   stage('SonarQube analysis') {
      environment {
-        SCANNER_HOME = tool 'Sonar-scanner'
+       SCANNER_HOME = tool 'Sonar-scanner'
      }
-     def mvn = tool 'Maven';   
 
     
      steps {
