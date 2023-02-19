@@ -13,9 +13,10 @@ tools {
 }
 stages {
   stage('SonarQube analysis') {
-    environment {
-      SCANNER_HOME = tool 'Sonar-scanner'
-    }
+
+      def mvn = tool 'Default Maven';
+
+    
      steps {
      withSonarQubeEnv(credentialsId: 'sq-token', installationName: 'sq-server') {
           sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sq-inner"
