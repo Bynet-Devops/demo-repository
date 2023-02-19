@@ -6,20 +6,28 @@ pipeline {
     SONARQUBE_LOGIN = 'sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5'
   }
 
-  stages {
-    stage('Build and Test') {
-      steps {
-        docker.image('sonarqube').run("--rm -v ${pwd}:/usr/src -e SONAR_HOST_URL=http://localhost:9000 -e SONAR_LOGIN=sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5 sonar-scanner")
-
-      }
-    }
-
-    stage('SonarQube analysis') {
-      steps {
-        withSonarQubeEnv('SonarQube') {
-          sh 'sonar-scanner'
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                // clone the GitHub repository
+                git 'https://github.com/Bynet-Devops/demo-repository.git'
+            }
         }
-      }
+        stage('Build') {
+            steps {
+                // build the project with Maven
+                sh 'mvn clean package'
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                // send the binary to SonarQube for analysis
+                withSonarQubeEnv('sq-server') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
     }
-  }
 }
