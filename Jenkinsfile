@@ -32,7 +32,7 @@ stages {
     
        }
      }
-}
+
    stage('SQuality Gate') {
      steps {
        timeout(time: 1, unit: 'MINUTES') {
