@@ -17,12 +17,10 @@ stages {
        SCANNER_HOME = tool 'Sonar-scanner'
      }
      steps {
-     withSonarQubeEnv('sq-server') {
-          sh '''$SCANNER_HOME/bin/sonar-scanner \
-            -Dsonar.projectKey=sq-inner \
-            -Dsonar.projectName=sq-inner \
-            -Dsonar.sources=./ \
-            '''
+     withSonarQubeEnv('SonarQube') {
+     withCredentials([string(credentialsId: 'my-sonarqube-token', variable: 'SONARQUBE_TOKEN')]) {
+       sh 'mvn clean install sonar:sonar -Dsonar.login=$SONARQUBE_TOKEN'
+     }
         }
         }
        }
