@@ -9,7 +9,7 @@ environment {
 }
 tools {
    maven 'Maven'
-   jdk 'java'
+   jdk 'idk 1.8'
 }
 stages {
   stage('Build project') {
