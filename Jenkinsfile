@@ -23,10 +23,7 @@ stages {
             -Dsonar.projectKey=sq-inner \
             -Dsonar.projectName=sq-inner \
             -Dsonar.sources=./ \
-            -Dsonar.java.binaries=target/classes/ \
-            
-            -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
-            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}'''
+           '''
      }
         }
         }
