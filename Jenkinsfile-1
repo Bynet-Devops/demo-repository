@@ -3,7 +3,13 @@
 pipeline {
     agent any
     stages {
-     
+        stage('Install Maven') {
+            steps {
+                // install Maven on the Jenkins agent
+                sh 'sudo apt-get install -y maven'
+            }
+        }
+        
         stage('Build') {
             steps {
                 // build the project with Maven
