@@ -27,7 +27,7 @@ stages {
           sh '''$SCANNER_HOME/bin/sonar-scanner \
           -Dsonar.projectKey=sq-inner \
           -Dsonar.projectName=sq-inner \
-          -Dsonar.sources=./ \'''
+          -Dsonar.sources=./ \ '''
           
 
     
