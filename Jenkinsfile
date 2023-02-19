@@ -12,11 +12,6 @@ tools {
    jdk 'idk 1.8'
 }
 stages {
-  stage('Build project') {
-    steps {
-      sh '''mvn install'''
-    }
-  }
   stage('SonarQube analysis') {
     environment {
       SCANNER_HOME = tool 'Sonar-scanner'
