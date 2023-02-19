@@ -17,7 +17,7 @@ stages {
        SCANNER_HOME = tool 'Sonar-scanner'
      }
      steps {
-     withSonarQubeEnv('sq-server') {
+     withSonarQubeEnv(installationName:'sq-server') {
      withCredentials([string(credentialsId: 'new-sq-pass', variable: 'SONARQUBE_TOKEN')]) {
           sh '''$SCANNER_HOME/bin/sonar-scanner \
             -Dsonar.projectKey=sq-inner \
