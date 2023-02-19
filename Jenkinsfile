@@ -28,7 +28,7 @@ stages {
         }
         }
        }
-                         }
+ }
 
    stage('SQuality Gate') {
      steps {
@@ -36,7 +36,7 @@ stages {
        waitForQualityGate abortPipeline: true
        }
   }
-}
+
 }
 }
 
