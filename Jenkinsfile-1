@@ -1,41 +1,25 @@
 pipeline {
   agent any
 
-  stages {
-    agent { docker { image 'node:16.17.1-alpine' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'node --version'
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
-    }
-}
+  environment {
+    SONARQUBE_HOST_URL = 'http://localhost:9000'
+    SONARQUBE_LOGIN = 'sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5'
+  }
 
-    stage('Code Analysis') {
-      environment {
-        SONAR_LOGIN = credentials('sq-token')
+  stages {
+    stage('Build and Test') {
+      steps {
+        sh 'npm install'
+        sh 'npm run test'
       }
+    }
+
+    stage('SonarQube analysis') {
       steps {
         withSonarQubeEnv('SonarQube') {
-          sh 'sonar-scanner -Dsonar.login=$SONAR_LOGIN -Dsonar.projectKey=sq-inner -Dsonar.sources=. -Dsonar.projectName=sq-inner'
+          sh 'sonar-scanner'
         }
       }
     }
   }
-}
-
-
-
-pipeline {
-    agent { docker { image 'node:16.17.1-alpine' } }
-    stages {
-        stage('build') {
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
 }
