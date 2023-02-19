@@ -14,7 +14,7 @@ tools {
 stages {
   stage('SonarQube analysis') {
 
-      def mvn = tool 'Default Maven';
+      def mvn = tool 'Maven';
 
     
      steps {
