@@ -18,7 +18,7 @@ stages {
     }
     steps {
     withSonarQubeEnv(credentialsId: 'sq-token', installationName: 'sq-server') {
-         sh '''${scannerHome}/bin/sonar-scanner \
+         sh '''$SCANNER_HOME/bin/sonar-scanner \
          -Dsonar.projectKey=sq-inner \
          -Dsonar.projectName=sq-inner \
          -Dsonar.sources=./ \
