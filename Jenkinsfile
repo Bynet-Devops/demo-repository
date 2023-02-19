@@ -1,21 +1,47 @@
+
+
+#!groovy
 pipeline {
-  agent { label 'linux'}
-  stages {
-    stage('SCM') {
-      steps {
-          checkout scm
+agent any
+environment {
+   GIT_COMMIT_SHORT = sh(
+     script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+     returnStdout: true
+    )
+}
+tools {
+   maven 'maven'
+   jdk 'java'
+}
+stages {
+  stage('Build project') {
+    steps {
+      sh '''mvn install'''
     }
   }
-    stage('Scan') {
-      steps {
-
-      
-        withSonarQubeEnv(installationName: 'SQ-scanner') { 
-          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
-          sh 'sonar-scanner -Dsonar.projectKey=sq-inner -Dsonar.sources=. -Dsonar.host.url=http://localhost:9000 -Dsonar.login=squ_ac4f4cdbd5d10a379d29208cc4f5bf6597f294d1'
-       }
-      }
+  stage('SonarQube analysis') {
+    environment {
+      SCANNER_HOME = tool 'Sonar-scanner'
     }
+    steps {
+    withSonarQubeEnv(credentialsId: 'sq-token', installationName: 'sq-server') {
+         sh '''$SCANNER_HOME/bin/sonar-scanner \
+         -Dsonar.projectKey=sq-inner \
+         -Dsonar.projectName=sq-inner \
+         -Dsonar.sources=src/ \
+         -Dsonar.java.binaries=target/classes/ \
+         -Dsonar.exclusions=src/test/java/****/*.java \
+         -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
+         -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}'''
+       }
+     }
+}
+   stage('SQuality Gate') {
+     steps {
+       timeout(time: 1, unit: 'MINUTES') {
+       waitForQualityGate abortPipeline: true
+       }
   }
 }
-
+}
+}
