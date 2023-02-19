@@ -18,12 +18,8 @@ stages {
     }
      steps {
      withSonarQubeEnv(credentialsId: 'sq-token', installationName: 'sq-server') {
-          sh '''$SCANNER_HOME/bin/sonar-scanner \
-          -Dsonar.host.url=http://localhost:9000 \
-          -Dsonar.projectKey=sq-inner \
-          -Dsonar.projectName=sq-inner \
-          -Dsonar.sources=./ \
-          -Dsonar.login=sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5'''
+          sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sq-inner"
+
     
        }
      }
