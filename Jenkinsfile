@@ -17,7 +17,7 @@ stages {
       SCANNER_HOME = tool 'Sonar-scanner'
     }
     steps {
-       withSonarQubeEnv('My SonarQube Server') {
+       withSonarQubeEnv('sq-server') {
                 sh 'mvn clean package sonar:sonar'
     
        }
