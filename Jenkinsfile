@@ -22,11 +22,11 @@ stages {
       SCANNER_HOME = tool 'Sonar-scanner'
     }
     steps {
-    withSonarQubeEnv(credentialsId: 'sq-token', installationName: 'sq-server') {
+    withSonarQubeEnv( installationName: 'sq-server') {
          sh '''$SCANNER_HOME/bin/sonar-scanner \
          -Dsonar.projectKey=sq-inner \
          -Dsonar.projectName=sq-inner \
-         -Dsonar.sources=src/ \
+         -Dsonar.sources=./ \
          -Dsonar.java.binaries=target/classes/ \
          -Dsonar.exclusions=src/test/java/****/*.java \
          -Dsonar.java.libraries=/var/lib/jenkins/.m2/**/*.jar \
