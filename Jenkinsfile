@@ -8,7 +8,6 @@ pipeline {
   }
     stage('Scan') {
       steps {
-        sh 'mvn archetype:generate -DgroupId=sq.example -DartifactId=sq-scanner -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false'
 
       
         withSonarQubeEnv(installationName: 'SQ-scanner') { 
