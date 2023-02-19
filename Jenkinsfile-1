@@ -3,12 +3,7 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
-            steps {
-                // clone the GitHub repository
-                git 'https://github.com/Bynet-Devops/demo-repository.git'
-            }
-        }
+     
         stage('Build') {
             steps {
                 // build the project with Maven
