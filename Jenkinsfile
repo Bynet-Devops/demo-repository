@@ -22,7 +22,7 @@ stages {
            sh '''$SCANNER_HOME/bin/sonar-scanner \
             -Dsonar.projectKey=sq-inner \
             -Dsonar.projectName=sq-inner \
-            -Dsonar.sources=. \
+            -Dsonar.sources=src \
             
            '''
            
@@ -30,7 +30,13 @@ stages {
         }
         }
    }
-
+    stage('SQuality Gate') {
+      steps {
+        timeout(time: 1, unit: 'MINUTES') {
+        waitForQualityGate abortPipeline: true
+        }
+   }
+    }
  
    }
 }
