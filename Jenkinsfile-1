@@ -14,6 +14,9 @@ pipeline {
     }
     stages {
         stage('Build') {
+            environment {
+                JAVA_HOME = "%JAVA_HOME%\bin"
+}
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
