@@ -13,6 +13,12 @@ tools {
 }
 stages {
    
+   stage('Build project') {
+    steps {
+      sh '''mvn install'''
+    }
+  }
+   
    stage('SonarQube analysis') {
      environment {
        SCANNER_HOME = tool 'Sonar-scanner'
@@ -22,7 +28,7 @@ stages {
            sh '''$SCANNER_HOME/bin/sonar-scanner \
             -Dsonar.projectKey=sq-inner \
             -Dsonar.projectName=sq-inner \
-            -Dsonar.sources=src \
+            -Dsonar.sources=. \
             
            '''
            
