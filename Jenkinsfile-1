@@ -8,17 +8,9 @@ pipeline {
             returnStdout: true
         )
     }
-    tools {
-        maven 'Maven'
-        jdk 'idk 1.8'
-
-    }
+    
     stages {
-        stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
+      
         stage('SonarQube analysis') {
             environment {
                 scannerHome = tool 'Sonar-scanner'
