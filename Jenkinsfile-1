@@ -1,11 +1,37 @@
-node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def mvn = tool 'Maven';
-    withSonarQubeEnv(credentialsId: 'sq-token', installationName:'sq-server') {
-      sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=sq-inner"
+
+
+pipeline {
+    agent {
+      Node {
+    environment {
+        GIT_COMMIT_SHORT = sh(
+            script: "printf \$(git rev-parse --short ${GIT_COMMIT})",
+            returnStdout: true
+        )
     }
-  }
-}
+    tools {
+        maven 'Maven'
+        jdk 'jdk8'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn -B -DskipTests clean package'
+            }
+        }
+        stage('SonarQube analysis') {
+            environment {
+                scannerHome = tool 'Sonar-scanner'
+            }
+            steps {
+               withSonarQubeEnv(credentialsId: 'sq-token', installationName:'sq-server') {
+                    sh "${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.projectKey=sq-inner \
+                        -Dsonar.projectName=sq-inner \
+                        -Dsonar.projectVersion=${env.GIT_COMMIT_SHORT} \
+                        -Dsonar.sources=."
+                }
+            }
+        }
+    }
+}}}
