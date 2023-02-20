@@ -18,12 +18,12 @@ stages {
        SCANNER_HOME = tool 'Sonar-scanner'
      }
      steps {
-     withSonarQubeEnv(credentialsId: 'new-sq-pass', installationName:'sq-server') {
+     withSonarQubeEnv(credentialsId: 'sq-token', installationName:'sq-server') {
           sh '''$SCANNER_HOME/bin/sonar-scanner \
             -Dsonar.projectKey=sq-inner \
             -Dsonar.projectName=sq-inner \
-            -Dsonar.sources=. \
-            
+            -Dsonar.sources=./ \
+            -Dsonar.login=sqa_1688f05d029be9e2f0ab98d4a6a8195073adbcf5 \
            '''
      
         }
@@ -32,7 +32,7 @@ stages {
 
    stage('SQuality Gate') {
      steps {
-       timeout(time: 1, unit: 'MINUTES') {
+       timeout(time: 3, unit: 'MINUTES') {
        waitForQualityGate abortPipeline: true
        }
   }
