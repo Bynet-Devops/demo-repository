@@ -10,7 +10,6 @@ pipeline {
     }
     tools {
         maven 'Maven'
-     #   jdk 'idk 1.8'
     }
     stages {
         stage('Build') {
