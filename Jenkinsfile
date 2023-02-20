@@ -19,12 +19,8 @@ stages {
      }
      steps {
      withSonarQubeEnv(credentialsId: 'sq-token', installationName:'sq-server') {
-          sh '''$SCANNER_HOME/bin/sonar-scanner \
-            -Dsonar.projectKey=sq-inner \
-            -Dsonar.projectName=sq-inner \
-            -Dsonar.sources=. \
-            
-           '''
+           sh 'mvn clean package sonar:sonar'
+           
      
         }
         }
@@ -32,7 +28,7 @@ stages {
 
    stage('SQuality Gate') {
      steps {
-       timeout(time: 3, unit: 'MINUTES') {
+       timeout(time: 1, unit: 'MINUTES') {
        waitForQualityGate abortPipeline: true
        }
   }
